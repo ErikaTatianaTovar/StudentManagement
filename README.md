@@ -53,7 +53,26 @@ Este backend ofrece funcionalidades básicas para gestionar usuarios y validar l
 
 ### Configuración de la Base de Datos
 
-- **Base de Datos**: MySQL en Google Cloud
+#### Base de Datos en la Nube
+
+Utilizamos MySQL en Google Cloud. La base de datos contiene una tabla `user` con las siguientes columnas:
+
+- `id`
+- `email`
+- `passwordhash`
+
+Para acceder a la base de datos en Google Cloud, debe compartir la IP, para agregarlo a las redes permitidas.
+
+#### Configuración Local
+
+Si prefieres probar la base de datos localmente, sigue estos pasos:
+
+1. Crea una base de datos en tu entorno local.
+2. Edita el archivo de configuración (`config`) para conectar tu aplicación a esta base de datos local.
+3. Crea la tabla `user` con las siguientes columnas:
+   - `id`
+   - `email`
+   - `passwordhash`
 
 ### Instalación
 
