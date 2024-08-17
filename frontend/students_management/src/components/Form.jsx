@@ -1,51 +1,15 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import Validations from '../utils/validations';
+import { useCheckStudentApprovalMutation } from '../api/apiAuthSlice';
+import { Navigate } from 'react-router-dom';
 
 const Form = () => {
   const [documentNumber, setDocumentNumber] = useState('');
   const [studentData, setStudentData] = useState(null);
+  const [checkStudentApproval] = useCheckStudentApprovalMutation();
 
-  // Datos de ejemplo
-  const approvedStudents = [
-    {
-      id: "fffdee6a-adec-4044-b3d5-d103f0e211e7",
-      aprobado: true,
-      estudiante: {
-        nombres: "EDGAR LEONARDO",
-        apellidos: "PARRA ALVAREZ",
-        tipo_documento: "CC",
-        num_documento: "1018473282",
-        email: "edgarleonardo03@gmail.com"
-      },
-      curso: {
-        nombreCurso: "Desarrollo Web Full Stack",
-        codigoCurso: "DWFSH1-176",
-        nivel: "Básico",
-        modalidad: "Hibrido"
-      }
-    },
-    {
-      id: "ffff11ab-c496-40fc-bbf2-19be5295642b",
-      aprobado: true,
-      estudiante: {
-        nombres: "WENDY JOHANA",
-        apellidos: "SARMIENTO GUAYACUNDO",
-        tipo_documento: "CC",
-        num_documento: "53049323",
-        email: "johana.sarmiento85@gmail.com"
-      },
-      curso: {
-        nombreCurso: "Análisis y Visualización de Datos",
-        codigoCurso: "AVDV2-88",
-        nivel: "Intermedio",
-        modalidad: "Virtual"
-      }
-    }
-  ];
-
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Borra los datos de la consulta anterior
@@ -55,16 +19,24 @@ const Form = () => {
       return;
     }
 
-    const student = approvedStudents.find(student => student.estudiante.num_documento === documentNumber);
-    
-    if (student) {
-      setStudentData(student);
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Número de documento no encontrado',
-        text: 'El número de documento ingresado no está registrado.',
-      });
+    try {
+      const result = await checkStudentApproval(documentNumber).unwrap();
+      setStudentData(result);
+    } catch (err) {
+      if (err.status === 401 || err.status === 403) {
+        // Muestra un mensaje de error si el correo ya está registrado
+        Swal.fire({
+          icon: 'error',
+          title: 'Sesión inválida',
+          text: 'Por favor inicie sesión nuevamente',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Número de documento no encontrado',
+          text: 'El número de documento ingresado no está registrado.',
+        });
+      }
     }
   };
 
@@ -95,10 +67,10 @@ const Form = () => {
         {studentData && (
           <div className="mt-6 p-6 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-4 text-gray-800">Información del Estudiante</h3>
-            <p><strong>Nombre Completo:</strong> {studentData.estudiante.nombres} {studentData.estudiante.apellidos}</p>
-            <p><strong>Número de Documento:</strong> {studentData.estudiante.num_documento}</p>
-            <p><strong>Correo Electrónico:</strong> {studentData.estudiante.email}</p>
-            <p><strong>Nombre del Curso:</strong> {studentData.curso.nombreCurso}</p>
+            <p><strong>Nombre Completo:</strong> {studentData.nombreCompleto}</p>
+            <p><strong>Número de Documento:</strong> {studentData.numeroDocumento}</p>
+            <p><strong>Correo Electrónico:</strong> {studentData.correoElectronico}</p>
+            <p><strong>Nombre del Curso:</strong> {studentData.nombreCurso}</p>
             </div>
         )}
       </div>

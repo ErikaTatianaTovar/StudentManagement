@@ -1,5 +1,5 @@
 const getApiBaseUrl = () => {
-    return "link a bd";
+    return "http://localhost:3000";
   };
   
   export default getApiBaseUrl;

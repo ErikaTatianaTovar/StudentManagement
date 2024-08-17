@@ -1,23 +1,32 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLoginUserMutation } from '../../api/apiAuthSlice'; // Importa el hook de RTK Query
 import { login } from '../../features/authSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import Validations from '../../utils/validations';
-//import getApiBaseUrl from '../../features/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginUser, { isLoading, error }] = useLoginUserMutation(); // Usa el hook de RTK Query para manejar el login
   const dispatch = useDispatch();
-  //const baseUrl = getApiBaseUrl();
+  const navigate = useNavigate(); // Inicializa useNavigate
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!Validations.validateEmail(e.target.email.value)) {
+    if (!Validations.validateEmail(email)) {
       return; // Detiene el envío si el correo electrónico es inválido
-  }
-    dispatch(login({ email, password }));
+    }
+
+    try {
+      const result = await loginUser({ email, password }).unwrap();
+      dispatch(login(result)); // Actualiza el estado de autenticación
+      navigate('/form'); // Redirige al usuario a la página /form después de iniciar sesión
+    } catch (err) {
+      // Aquí puedes manejar el error, ya sea mostrando un mensaje o registrándolo
+      console.error("Error logging in:", err);
+    }
   };
 
   return (
@@ -49,10 +58,12 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform transform hover:scale-105"
+            disabled={isLoading} // Desactiva el botón si está cargando
+            className={`w-full py-2 px-4 ${isLoading ? 'bg-gray-400' : 'bg-blue-600'} text-white font-semibold rounded-lg shadow-md hover:${isLoading ? 'bg-gray-500' : 'bg-blue-700'} focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform transform hover:scale-105`}
           >
-            Iniciar Sesión
+            {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'} {/* Mensaje basado en el estado de carga */}
           </button>
+          {error && <p className="text-red-500 text-center mt-2">{error.message}</p>} {/* Mostrar mensajes de error */}
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
               ¿No tienes cuenta?{' '}
