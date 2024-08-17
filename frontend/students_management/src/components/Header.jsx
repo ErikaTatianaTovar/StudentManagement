@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logout } from '../features/authSlice';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/authSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -8,7 +8,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
+    navigate("/login");
   };
 
   return (

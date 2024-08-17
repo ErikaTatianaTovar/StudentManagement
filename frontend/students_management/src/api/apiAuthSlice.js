@@ -7,7 +7,6 @@ export const apiAuthSlice = createApi({
     baseUrl: getApiBaseUrl(),
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
-      console.log("Token form:" + token);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -32,16 +31,21 @@ export const apiAuthSlice = createApi({
     checkStudentApproval: builder.mutation({
       query: (num_document) => ({
         url: `/students/${num_document}/approval`,
-        method: "POST"
+        method: "POST",
       }),
     }),
     userController: builder.mutation({
       query: (email) => ({
         url: `users/${email}`,
-        method: "POST"
+        method: "POST",
       }),
     }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation, useCheckStudentApprovalMutation, useUserControllerMutation } = apiAuthSlice;
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useCheckStudentApprovalMutation,
+  useUserControllerMutation,
+} = apiAuthSlice;

@@ -1,9 +1,15 @@
-import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import Form from './components/Form';
-import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
-import Header from './components/Header';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+import Form from "./components/Form";
+import Login from "./components/Auth/Login";
+import Register from "./components/Auth/Register";
+import Header from "./components/Header";
 
 const PrivateRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -12,7 +18,7 @@ const PrivateRoute = ({ children }) => {
 
 const AppContent = () => {
   const location = useLocation();
-  const showHeader = location.pathname === '/form';
+  const showHeader = location.pathname === "/form";
 
   return (
     <div>
@@ -24,9 +30,10 @@ const AppContent = () => {
           <Route
             path="/form"
             element={
-             
+              <PrivateRoute>
+                {" "}
                 <Form />
-              
+              </PrivateRoute>
             }
           />
         </Routes>
