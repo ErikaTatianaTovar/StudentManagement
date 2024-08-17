@@ -51,6 +51,10 @@ El frontend de la aplicación está desarrollado con React y utiliza Redux Toolk
 
 Este backend ofrece funcionalidades básicas para gestionar usuarios y validar la aprobación de estudiantes. Utiliza Node.js y Express junto con una base de datos MySQL para el almacenamiento de datos.
 
+### Configuración de la Base de Datos
+
+- **Base de Datos**: MySQL en Google Cloud
+
 ### Instalación
 
 1. **Clona el repositorio**:
