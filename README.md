@@ -34,15 +34,13 @@ El frontend de la aplicación está desarrollado con React y utiliza Redux Toolk
     ```bash
     npm run dev
     ```
-    La aplicación estará disponible en `http://localhost:3000`.
+Estará corriendo en el puerto que aparece en la terminal.
 
 ### Scripts de NPM
 
 - **`dev`**: Inicia el servidor de desarrollo usando Vite.
 - **`build`**: Construye la aplicación para producción.
 - **`preview`**: Muestra una vista previa de la versión construida de la aplicación.
-- **`lint`**: Ejecuta ESLint para verificar problemas de estilo y errores.
-
 ---
 
 ## Backend
@@ -95,7 +93,7 @@ Si prefieres probar la base de datos localmente, sigue estos pasos:
     ```bash
     npm start
     ```
-    El servidor estará corriendo en `http://localhost:3000`.
+    El servidor estará corriendo en el puerto que aparece en la terminal.
 
 ### Endpoints
 
