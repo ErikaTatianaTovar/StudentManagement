@@ -14,7 +14,9 @@
 - **Backend**: [student-management-backend-virid.vercel.app](https://student-management-backend-virid.vercel.app/)
 
 
-Nota: El backend del proyecto se conecta a una base de datos alojada en Google Cloud, la cual requiere que las IPs que acceden a la base de datos estén autorizadas mediante el uso de direcciones IP estáticas. Sin embargo, es importante destacar que Vercel, la plataforma en la que el backend ha sido desplegado, utiliza direcciones IP dinámicas. Debido a esta limitación, la base de datos en Google Cloud no pudo autorizar las conexiones del backend, lo que ha resultado en la falta de funcionalidad del backend en el entorno de producción. Asi mismo, para su funcionamiento en el entorno local, se dejo en el frontend el llamado a la api https://localhost:3000, puerto donde el backend corre localmente. Las indicaciones para la conexión a la base de datos local, se detallan mas adelante.
+Nota: El backend del proyecto se conecta a una base de datos alojada en Google Cloud, la cual requiere que las IPs que acceden a la base de datos estén autorizadas mediante el uso de direcciones IP estáticas. Sin embargo, es importante destacar que Vercel, la plataforma en la que el backend ha sido desplegado, utiliza direcciones IP dinámicas. Debido a esta limitación, la base de datos en Google Cloud no pudo autorizar las conexiones del backend, lo que ha resultado en la falta de funcionalidad del backend en el entorno de producción. Así mismo, para su funcionamiento en el entorno local, se dejó en el frontend el llamado a la API https://localhost:3000, puerto donde el backend corre localmente. Las indicaciones para la conexión a la base de datos local se detallan más adelante.
+
+
 ---
 
 ## Frontend
